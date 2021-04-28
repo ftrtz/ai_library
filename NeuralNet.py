@@ -60,12 +60,12 @@ class NeuralNet(Model):
                            epochs=5,
                            batch_size=128,
                            validation_split=0.2,
+                           verbose=2,
                            callbacks=[callbacks])
         return history
 
-    def eval(self, x_test, y_test):
-        self.evaluate(
-            # Fill with args
-        )
+    def test_eval(self, x_test, y_test):
+        loss, accuracy = self.evaluate(x_test, y_test, verbose=0)
+        return loss, accuracy
 
 
