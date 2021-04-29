@@ -26,7 +26,6 @@ class NeuralNet(Model):
         # Classifier Head
         self.dense6 = layers.Dense(units=num_classes, activation="softmax")
 
-
     def call(self, inputs):
         # conv1
         x = self.conv1(inputs)
@@ -52,8 +51,8 @@ class NeuralNet(Model):
 
     def comp_and_fit(self, x_train, y_train, EPOCHS, BATCH_SIZE, callbacks):
         self.compile(optimizer='adam',
-                loss='sparse_categorical_crossentropy',
-                metrics=['accuracy'])
+                     loss='sparse_categorical_crossentropy',
+                     metrics=['accuracy'])
 
         history = self.fit(x=x_train,
                            y=y_train,
@@ -68,4 +67,7 @@ class NeuralNet(Model):
         loss, accuracy = self.evaluate(x_test, y_test, verbose=0)
         return loss, accuracy
 
-
+    def test_pred(self, x_test):
+        y_proba = self.predict(x_test)
+        y_preds = y_proba.argmax(axis=-1)
+        return y_preds
