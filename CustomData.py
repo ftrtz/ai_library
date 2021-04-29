@@ -1,9 +1,6 @@
-# %%
 import cv2
 import numpy as np
 import secrets
-
-# %%
 
 
 class CustomData:
@@ -14,7 +11,7 @@ class CustomData:
                 img = np.zeros((64, 64))
                 coord = tuple(np.random.randint(20, 40, size=2))
                 size = np.random.randint(5, 20)
-                cv2.circle(img, coord, size, color=(255, 255, 255), thickness=2)
+                cv2.circle(img, coord, size, color=(255, 255, 255), thickness=1)
                 label = "circle"
                 return img, label
 
@@ -22,7 +19,7 @@ class CustomData:
                 img = np.zeros((64, 64))
                 coord_l = tuple(np.random.randint(2, 30, size=2))
                 coord_r = tuple(np.random.randint(34, 60, size=2))
-                cv2.rectangle(img, coord_l, coord_r, color=(255, 255, 255), thickness=2)
+                cv2.rectangle(img, coord_l, coord_r, color=(255, 255, 255), thickness=1)
                 label = "rectangle"
                 return img, label
 
@@ -30,7 +27,7 @@ class CustomData:
                 img = np.zeros((64, 64))
                 pts = np.array(np.random.randint(2, 60, size=6), np.int32)
                 pts = pts.reshape((-1, 1, 2))
-                cv2.polylines(img, [pts], isClosed=True, color=(255, 255, 255), thickness=2)
+                cv2.polylines(img, [pts], isClosed=True, color=(255, 255, 255), thickness=1)
                 label = "triangle"
                 return img, label
 
