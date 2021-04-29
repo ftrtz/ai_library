@@ -50,15 +50,15 @@ class NeuralNet(Model):
 
         return x
 
-    def comp_and_fit(self, x_train, y_train, callbacks):
+    def comp_and_fit(self, x_train, y_train, EPOCHS, BATCH_SIZE, callbacks):
         self.compile(optimizer='adam',
                 loss='sparse_categorical_crossentropy',
                 metrics=['accuracy'])
 
         history = self.fit(x=x_train,
                            y=y_train,
-                           epochs=5,
-                           batch_size=128,
+                           epochs=EPOCHS,
+                           batch_size=BATCH_SIZE,
                            validation_split=0.2,
                            verbose=2,
                            callbacks=[callbacks])
