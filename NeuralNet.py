@@ -50,6 +50,15 @@ class NeuralNet(Model):
         return x
 
     def comp_and_fit(self, x_train, y_train, EPOCHS, BATCH_SIZE, callbacks):
+        """compiles the earlier defined model and fits on the training data
+
+        :param x_train: training images
+        :param y_train: training labels
+        :param EPOCHS: number of epochs
+        :param BATCH_SIZE: batch size
+        :param callbacks: list of used callbacks for fitting
+        :return: fit history
+        """
         self.compile(optimizer='adam',
                      loss='sparse_categorical_crossentropy',
                      metrics=['accuracy'])
@@ -64,10 +73,21 @@ class NeuralNet(Model):
         return history
 
     def test_eval(self, x_test, y_test):
+        """evaluates fitted model on the testing data to obtain loss and accuracy
+
+        :param x_test: test images
+        :param y_test: test labels
+        :return: loss and accuracy values
+        """
         loss, accuracy = self.evaluate(x_test, y_test, verbose=0)
         return loss, accuracy
 
     def test_pred(self, x_test):
+        """predicts classes of input images
+
+        :param x_test:
+        :return: 1D-array of class predictions
+        """
         y_proba = self.predict(x_test)
         y_preds = y_proba.argmax(axis=-1)
         return y_preds

@@ -5,8 +5,15 @@ rng = np.random.default_rng()
 
 
 class CustomData:
+    """class for data generation and preprocessing"""
 
     def generate_data(self, n):
+        """generates array with images and list of corresponding labels
+
+        :param n: sample size (int)
+        :return: array containing image data and list containing labels
+        """
+
         def rand_shape():
             def make_line():
                 img = np.zeros((64, 64))
@@ -44,8 +51,8 @@ class CustomData:
                 img = np.zeros((64, 64))
                 center = rng.integers(24, 40)
                 size = rng.integers(5, 20)
-                line2 = tuple([center-size, center-size, center+size, center+size])
-                line1 = tuple([center-size, center+size, center+size, center-size])
+                line2 = tuple([center - size, center - size, center + size, center + size])
+                line1 = tuple([center - size, center + size, center + size, center - size])
                 lines = np.array([line1, line2]).reshape(-1, 2)
                 cv2.polylines(img, [lines], isClosed=False, color=(255, 255, 255), thickness=1)
                 label = "chair"
@@ -64,13 +71,20 @@ class CustomData:
         return x, y
 
     def preprocessing(self, x, y):
-        # reshaping the training and testing data
+        """preprocesses input data.
+        Includes reshaping, normalizing of pixel values and turning string labels to integers
+
+        :param x: image array
+        :param y: list of labels
+        :return: reshaped and normalized img array, list of corresponding labels (int), list of unique original labels
+        """
+        # reshaping image data
         x = x.reshape((x.shape[0], x.shape[1], x.shape[2], 1))
 
         # normalizing pixel values
         x = x / 255.0
 
-        # str labels to integers
+        # string labels to integers
         if isinstance(y[0], str):
             labels, y = np.unique(y, return_inverse=True)
         else:
