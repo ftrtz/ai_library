@@ -4,15 +4,15 @@ from sklearn.metrics import confusion_matrix
 import seaborn as sn
 import pandas as pd
 
-
+rng = np.random.default_rng()
 
 class Visualisation:
 
     def img_plot(self, title_text, x, y):
         fig = plt.figure(figsize=(8, 4))
         fig.suptitle(title_text)
-        for i in range(10):
-            j = i + np.random.randint(len(y)-10)
+        sample = rng.choice(len(y), 10)
+        for i, j in enumerate(sample):
             ax = fig.add_subplot(2, 5, i + 1, xticks=[], yticks=[])
             ax.imshow(np.squeeze(x[j]), cmap='gray')
             ax.set_title(label=y[j])
