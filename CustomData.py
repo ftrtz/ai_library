@@ -24,13 +24,13 @@ class CustomData:
                 label = "line"
                 return np.array(img), label
 
-            def make_circle():
+            def make_ellipse():
                 img = Image.new(mode="L", size=(64, 64))
                 coord1 = tuple(rng.integers(4, 30, size=2))
                 coord2 = tuple(rng.integers(34, 60, size=2))
                 d = ImageDraw.Draw(img)
                 d.ellipse([coord1, coord2], fill=None, outline="white")
-                label = "circle"
+                label = "ellipse"
                 return np.array(img), label
 
             def make_rectangle():
@@ -61,7 +61,7 @@ class CustomData:
                 label = "hourglass"
                 return np.array(img), label
 
-            funs = [make_line, make_circle, make_triangle, make_rectangle, make_hourglass]
+            funs = [make_line, make_ellipse, make_triangle, make_rectangle, make_hourglass]
             return rng.choice(funs)()
 
         x = []

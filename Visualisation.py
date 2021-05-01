@@ -9,6 +9,13 @@ rng = np.random.default_rng()
 class Visualisation:
 
     def img_plot(self, title_text, x, y):
+        """plots a sample of 10 random images and the provided labels
+
+        :param title_text: header for the plot
+        :param x: image array
+        :param y: label list
+        :return: image plot
+        """
         fig = plt.figure(figsize=(8, 4))
         fig.suptitle(title_text)
         sample = rng.choice(len(y), 10)
@@ -18,6 +25,13 @@ class Visualisation:
             ax.set_title(label=y[j])
 
     def cm_plot(self, y_test, y_preds, labels):
+        """plots a confusion matrix
+
+        :param y_test: actual labels
+        :param y_preds: predicted labels
+        :param labels: unique labels for axis annotations
+        :return: confusion matrix plot
+        """
         cm = confusion_matrix(y_test, y_preds)
 
         df_cm = pd.DataFrame(cm, index=labels,
