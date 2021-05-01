@@ -1,5 +1,5 @@
-import cv2
 import numpy as np
+from PIL import Image, ImageDraw
 
 rng = np.random.default_rng()
 
@@ -16,49 +16,52 @@ class CustomData:
 
         def rand_shape():
             def make_line():
-                img = np.zeros((64, 64))
+                img = Image.new(mode="L", size=(64, 64))
                 coord1 = tuple(rng.integers(4, 60, size=2))
                 coord2 = tuple(rng.integers(4, 60, size=2))
-                cv2.line(img, coord1, coord2, color=(255, 255, 255), thickness=1)
+                d = ImageDraw.Draw(img)
+                d.line([coord1, coord2], fill="white")
                 label = "line"
-                return img, label
+                return np.array(img), label
 
             def make_circle():
-                img = np.zeros((64, 64))
-                coord = tuple(rng.integers(24, 40, size=2))
-                size = rng.integers(5, 20)
-                cv2.circle(img, coord, size, color=(255, 255, 255), thickness=1)
+                img = Image.new(mode="L", size=(64, 64))
+                coord1 = tuple(rng.integers(4, 30, size=2))
+                coord2 = tuple(rng.integers(34, 60, size=2))
+                d = ImageDraw.Draw(img)
+                d.ellipse([coord1, coord2], fill=None, outline="white")
                 label = "circle"
-                return img, label
+                return np.array(img), label
 
             def make_rectangle():
-                img = np.zeros((64, 64))
+                img = Image.new(mode="L", size=(64, 64))
                 coord_l = tuple(rng.integers(4, 30, size=2))
                 coord_r = tuple(rng.integers(34, 60, size=2))
-                cv2.rectangle(img, coord_l, coord_r, color=(255, 255, 255), thickness=1)
+                d = ImageDraw.Draw(img)
+                d.rectangle([coord_l, coord_r], fill=False, outline="white")
                 label = "rectangle"
-                return img, label
+                return np.array(img), label
 
             def make_triangle():
-                img = np.zeros((64, 64))
-                pts = np.array(rng.integers(4, 60, size=6))
-                pts = pts.reshape((-1, 1, 2))
-                cv2.polylines(img, [pts], isClosed=True, color=(255, 255, 255), thickness=1)
+                img = Image.new(mode="L", size=(64, 64))
+                pts = list(rng.integers(4, 60, size=6))
+                d = ImageDraw.Draw(img)
+                d.polygon(pts, fill=None, outline="white")
                 label = "triangle"
-                return img, label
+                return np.array(img), label
 
-            def make_chair():
-                img = np.zeros((64, 64))
+            def make_hourglass():
+                img = Image.new(mode="L", size=(64, 64))
                 center = rng.integers(24, 40)
                 size = rng.integers(5, 20)
-                line2 = tuple([center - size, center - size, center + size, center + size])
-                line1 = tuple([center - size, center + size, center + size, center - size])
-                lines = np.array([line1, line2]).reshape(-1, 2)
-                cv2.polylines(img, [lines], isClosed=False, color=(255, 255, 255), thickness=1)
-                label = "chair"
-                return img, label
+                lines = [(center - size, center - size), (center + size, center + size),
+                         (center - size, center + size), (center + size, center - size)]
+                d = ImageDraw.Draw(img)
+                d.polygon(lines, fill=None, outline="white")
+                label = "hourglass"
+                return np.array(img), label
 
-            funs = [make_line, make_circle, make_rectangle, make_triangle, make_chair]
+            funs = [make_line, make_circle, make_triangle, make_rectangle, make_hourglass]
             return rng.choice(funs)()
 
         x = []
