@@ -1,3 +1,3 @@
 # ai_library
 
-RAYLYTIC CodingChallenge - see main.ipynb for Documentation
+RAYLYTIC CodingChallenge - see [main.ipynb](./main.ipynb) for documentation
